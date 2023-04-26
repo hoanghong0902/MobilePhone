@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let Mobile = function(name, pin, status, mess){
+            this.name = name;
+            this.pin = pin;
+            this.status = status;
+            this.mess = mess;
+            this.inbox = new Array;
+            this.outbox = new Array;
+            this.setStatusOn = function(){
+                if(this.pin > 0){
+                    return this.status = true;
+                }
+                return this.status = false;
+            }
+            this.setStatusOff = function(){
+                return this.status = false;
+            }
+            this.getName = function(){
+                return name;
+            }
+            this.setName = function(name){
+                this.name = name;
+            }
+            this.getPin = function(){
+                return this.pin;
+            }
+            this.setPin = function(pin){
+                this.pin = pin;
+            }
+            this.getStatus = function(){
+                return this.status;
+            }
+            this.getEditor = function(){
+                if(this.status == true){
+                    return this.mess;
+                }
+            }
+            this.setEditor = function(mess){
+                if(this.status == true){
+                    this.mess = mess;
+                    this.pin--;
+                }
+            }
+            this.sendMessage = function(message, mobile){
+                if(this.status == true){
+                    this.outbox.push(message);
+                    mobile.inbox.push(message);
+                    this.pin--;
+                }
+            }
+            this.getMessage = function(){
+                if(this.status == true){
+                    this.inbox[this.mobile.inbox.length-1]; 
+                    this.pin--;
+                }
+            }
+            this.getInbox = function(){
+                if(this.status == true){
+                    document.write("<br><br>Hộp thư đến của " + this.name);
+                    for(let i=0; i< this.inbox.length; i++){
+                        document.write("<br>Message " + (i+1) + ": " + this.inbox[i] );
+                        this.pin--;
+                    }
+                }   
+            }
+            this.getOutbox = function(){
+                if(this.status == true){
+                    document.write("<br><br>Hộp thư gửi đi của " + this.name);
+                    for(let i=0; i< this.outbox.length; i++){
+                        document.write("<br>Message " + (i+1) + ": " + this.outbox[i] );
+                    }
+                    this.pin--;
+                }
+            }
+            this.charge = function(){
+                while(this.pin < 100){
+                    this.pin++;
+                }
+                return this.pin;
+            }
+            this.connectToMobile = function(mobile){
+                return this.mobile = mobile;
+            }
+        }
+
+        var nokia = new Mobile("Nokia");
+        var iphone = new Mobile("Iphone");
+        nokia.connectToMobile(iphone);
+        nokia.setPin(100);
+        iphone.setPin(50);
+        nokia.setStatusOn();
+        iphone.setStatusOn();
+
+        console.log(nokia.getStatus())
+        if(nokia.getStatus() == true){
+            document.write("<br>Trạng thái của điện thoại Nokia là: Bật &#160;&#160;&#160;&#160;=> Pin = " + nokia.getPin() );
+        } else{
+            document.write("<br>Trạng thái của điện thoại Nokia là: Tắt &#160;&#160;&#160;&#160;=> Pin = " + nokia.getPin() );
+        }
+        if(iphone.getStatus() == true){
+            document.write("<br>Trạng thái của điện thoại Iphone là: Bật &#160;&#160;&#160;&#160;=> Pin = " + iphone.getPin() );
+        } else{
+            document.write("<br>Trạng thái của điện thoại Iphone là: Tắt &#160;&#160;&#160;&#160;=> Pin = " + iphone.getPin() );
+        }
+        
+        nokia.setEditor("Hello");
+        document.write("<br><br>Tin nhắn đang soạn thảo của Nokia là: " + nokia.getEditor() + "&#160;&#160;&#160;&#160;=> Pin = " + nokia.getPin() );
+        iphone.setEditor("Hi");
+        document.write("<br><br>Tin nhắn đang soạn thảo của Iphone là: " + iphone.getEditor() + "&#160;&#160;&#160;&#160;=> Pin = " + iphone.getPin() );
+
+        nokia.sendMessage("How old are you?", iphone);
+        iphone.sendMessage("I'm fine thank you, and you?", nokia);
+        nokia.sendMessage("Nooo", iphone);
+        iphone.sendMessage("Whatt :))))", nokia);
+        nokia.sendMessage("Bye", iphone);
+        iphone.sendMessage("Bye!", nokia);
+        nokia.getOutbox();
+        document.write("<br>&#160;&#160;&#160;&#160;=> Pin " + nokia.name + " = " + nokia.getPin());
+        nokia.getInbox();
+        document.write("<br>&#160;&#160;&#160;&#160;=> Pin " + nokia.name + " = " + nokia.getPin());
+        iphone.getOutbox();
+        document.write("<br>&#160;&#160;&#160;&#160;=> Pin " + iphone.name + " = " + iphone.getPin());
+        iphone.getInbox();
+        document.write("<br>&#160;&#160;&#160;&#160;=> Pin " + iphone.name + " = " + iphone.getPin());
+
+        nokia.charge();
+        document.write("<br>" + nokia.name +" sau khi sạc &#160;&#160;&#160;&#160;=> Pin " + nokia.name + " = " + nokia.getPin());
+        iphone.charge();
+        document.write("<br>" + iphone.name +" sau khi sạc &#160;&#160;&#160;&#160;=> Pin " + iphone.name + " = " + iphone.getPin());
+    </script>
+</body>
+</html>
